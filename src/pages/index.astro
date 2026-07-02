@@ -1,48 +1,90 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import FallbackImage from '../assets/blog-placeholder-2.jpg';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const featuredPost = posts[0];
+const secondaryPosts = posts.slice(1, 4);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="hero">
+				<div class="hero-copy">
+					<p class="eyebrow">Blog editorial</p>
+					<h1>Historias que explican el impacto detras de cada proyecto.</h1>
+					<p>
+						Un espacio para publicar avances, aprendizajes y testimonios con una experiencia
+						simple para lectores y editores.
+					</p>
+					<div class="hero-actions">
+						<a class="button-primary" href="/blog/">Leer articulos</a>
+						<a class="button-secondary" href="/admin/">Entrar al admin</a>
+					</div>
+				</div>
+				{
+					featuredPost && (
+						<a class="featured-card" href={`/blog/${featuredPost.id}/`}>
+							<Image
+								width={720}
+								height={520}
+								src={featuredPost.data.heroImage ?? FallbackImage}
+								alt=""
+							/>
+							<div>
+								<span>Destacado</span>
+								<h2>{featuredPost.data.title}</h2>
+								<p>{featuredPost.data.description}</p>
+								<small>
+									<FormattedDate date={featuredPost.data.pubDate} />
+								</small>
+							</div>
+						</a>
+					)
+				}
+			</section>
+
+			<section class="latest">
+				<div class="section-heading">
+					<p class="eyebrow">Recientes</p>
+					<h2>Ultimas publicaciones</h2>
+				</div>
+				<div class="post-grid">
+					{
+						secondaryPosts.map((post) => (
+							<a class="post-card" href={`/blog/${post.id}/`}>
+								<Image
+									width={420}
+									height={260}
+									src={post.data.heroImage ?? FallbackImage}
+									alt=""
+								/>
+								<div>
+									<small>
+										<FormattedDate date={post.data.pubDate} />
+									</small>
+									<h3>{post.data.title}</h3>
+									<p>{post.data.description}</p>
+								</div>
+							</a>
+						))
+					}
+				</div>
+			</section>
 		</main>
 		<Footer />
 		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -59,3 +101,151 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		</script>
 	</body>
 </html>
+
+<style>
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+		gap: 40px;
+		align-items: stretch;
+		min-height: 580px;
+	}
+	.hero-copy {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding: 52px 0;
+	}
+	.eyebrow {
+		margin: 0 0 12px;
+		color: var(--warm);
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+	.hero h1 {
+		max-width: 680px;
+		margin-bottom: 20px;
+	}
+	.hero-copy > p:not(.eyebrow) {
+		max-width: 590px;
+		color: var(--muted);
+		font-size: 1.1rem;
+	}
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-top: 20px;
+	}
+	.button-primary,
+	.button-secondary {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 0 18px;
+		border-radius: 8px;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.button-primary {
+		background: var(--accent);
+		color: white;
+	}
+	.button-primary:hover {
+		background: var(--accent-dark);
+		color: white;
+	}
+	.button-secondary {
+		border: 1px solid var(--line);
+		background: white;
+		color: var(--accent-dark);
+	}
+	.featured-card {
+		display: grid;
+		align-content: end;
+		overflow: hidden;
+		min-height: 520px;
+		border: 1px solid var(--line);
+		border-radius: 8px;
+		background: var(--surface);
+		color: var(--ink);
+		text-decoration: none;
+		box-shadow: var(--box-shadow);
+	}
+	.featured-card img {
+		width: 100%;
+		height: 310px;
+		object-fit: cover;
+		border-radius: 0;
+	}
+	.featured-card div {
+		padding: 28px;
+	}
+	.featured-card span,
+	.post-card small {
+		color: var(--warm);
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+	.featured-card h2 {
+		margin-top: 8px;
+		font-size: 1.9rem;
+	}
+	.featured-card p,
+	.post-card p {
+		color: var(--muted);
+	}
+	.latest {
+		margin-top: 76px;
+	}
+	.section-heading {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 24px;
+		margin-bottom: 24px;
+	}
+	.post-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 18px;
+	}
+	.post-card {
+		overflow: hidden;
+		border: 1px solid var(--line);
+		border-radius: 8px;
+		background: var(--surface);
+		color: var(--ink);
+		text-decoration: none;
+	}
+	.post-card img {
+		width: 100%;
+		aspect-ratio: 16 / 10;
+		object-fit: cover;
+		border-radius: 0;
+	}
+	.post-card div {
+		padding: 20px;
+	}
+	.post-card h3 {
+		margin-top: 8px;
+		font-size: 1.2rem;
+	}
+	@media (max-width: 860px) {
+		.hero,
+		.post-grid {
+			grid-template-columns: 1fr;
+		}
+		.hero {
+			min-height: auto;
+		}
+		.hero-copy {
+			padding: 20px 0 0;
+		}
+		.featured-card {
+			min-height: auto;
+		}
+	}
+</style>

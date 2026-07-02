@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import FallbackImage from '../assets/blog-placeholder-2.jpg';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -11,48 +12,9 @@ type Props = CollectionEntry<'blog'>['data'];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="es">
 	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
+		<BaseHead title={title} description={description} image={heroImage ?? FallbackImage} />
 	</head>
 
 	<body>
@@ -60,7 +22,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<main>
 			<article>
 				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+					<Image width={1120} height={620} src={heroImage ?? FallbackImage} alt="" />
 				</div>
 				<div class="prose">
 					<div class="title">
@@ -69,13 +31,13 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 							{
 								updatedDate && (
 									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
+										Actualizado el <FormattedDate date={updatedDate} />
 									</div>
 								)
 							}
 						</div>
 						<h1>{title}</h1>
-						<hr />
+						<p class="description">{description}</p>
 					</div>
 					<slot />
 				</div>
@@ -84,3 +46,51 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		width: min(980px, calc(100% - 32px));
+	}
+	.hero-image {
+		overflow: hidden;
+		border-radius: 8px;
+		background: var(--line);
+	}
+	.hero-image img {
+		display: block;
+		width: 100%;
+		max-height: 520px;
+		object-fit: cover;
+		border-radius: 0;
+	}
+	.prose {
+		width: min(720px, 100%);
+		margin: 0 auto;
+		padding: 38px 0 0;
+		color: var(--ink);
+	}
+	.title {
+		margin-bottom: 34px;
+	}
+	.title h1 {
+		margin: 8px 0 16px;
+	}
+	.description {
+		margin: 0;
+		color: var(--muted);
+		font-size: 1.1rem;
+	}
+	.date {
+		margin-bottom: 0.5em;
+		color: var(--warm);
+		font-size: 0.8rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+	.last-updated-on {
+		color: var(--muted);
+		font-style: italic;
+		font-weight: 400;
+		text-transform: none;
+	}
+</style>
