@@ -6,14 +6,18 @@ import HeaderLink from './HeaderLink.astro';
 <header>
 	<nav>
 		<a class="brand" href="/" aria-label="Ir al inicio">
-			<span class="brand-mark">M</span>
-			<span>{SITE_TITLE}</span>
+			<span class="brand-mark"></span>
+			<span>
+				<strong>{SITE_TITLE}</strong>
+				<small>Blog editorial</small>
+			</span>
 		</a>
 		<div class="internal-links">
 			<HeaderLink href="/">Inicio</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
 			<HeaderLink href="/about">Proyecto</HeaderLink>
-			<a class="admin-link" href="/admin/">Admin</a>
+			<a class="icon-link" href="/blog/" aria-label="Buscar">Q</a>
+			<a class="subscribe-link" href="/admin/">Admin</a>
 		</div>
 	</nav>
 </header>
@@ -22,33 +26,44 @@ import HeaderLink from './HeaderLink.astro';
 		position: sticky;
 		top: 0;
 		z-index: 10;
-		border-bottom: 1px solid var(--line);
-		background: rgba(255, 255, 255, 0.94);
+		border-bottom: 1px solid #eceff1;
+		background: rgba(255, 255, 255, 0.96);
 		backdrop-filter: blur(12px);
 	}
 	.brand {
 		display: inline-flex;
 		align-items: center;
 		gap: 10px;
-		color: var(--ink);
-		font-weight: 700;
 		text-decoration: none;
 	}
-	.brand-mark {
+	.brand span:last-child {
 		display: grid;
-		width: 36px;
-		height: 36px;
-		place-items: center;
-		border-radius: 8px;
-		background: var(--accent);
-		color: white;
+		gap: 1px;
+	}
+	.brand strong {
+		color: var(--ink);
+		font-size: 0.86rem;
+		line-height: 1;
+	}
+	.brand small {
+		color: var(--muted);
+		font-size: 0.68rem;
+		line-height: 1;
+	}
+	.brand-mark {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background:
+			linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 42%),
+			linear-gradient(135deg, #2f6f73, #c85f4a);
 	}
 	nav {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		width: min(1120px, calc(100% - 32px));
-		min-height: 72px;
+		width: min(980px, calc(100% - 32px));
+		min-height: 56px;
 		margin: 0 auto;
 		gap: 24px;
 	}
@@ -58,20 +73,31 @@ import HeaderLink from './HeaderLink.astro';
 		gap: 6px;
 	}
 	nav a {
-		padding: 10px 12px;
+		padding: 8px 10px;
 		color: var(--muted);
-		border-radius: 8px;
+		border-radius: 7px;
 		text-decoration: none;
-		font-size: 0.95rem;
+		font-size: 0.78rem;
 	}
 	nav a.active {
-		background: #e7f0ed;
+		background: #f2f6f4;
 		color: var(--accent-dark);
 		font-weight: 700;
 	}
-	.admin-link {
-		border: 1px solid var(--line);
-		color: var(--accent-dark);
+	.icon-link,
+	.subscribe-link {
+		border: 1px solid #e6eaed;
+		background: #fff;
+		color: var(--ink);
+	}
+	.icon-link {
+		width: 30px;
+		padding: 7px 0;
+		text-align: center;
+		font-weight: 700;
+	}
+	.subscribe-link {
+		font-weight: 700;
 	}
 	@media (max-width: 720px) {
 		nav {
