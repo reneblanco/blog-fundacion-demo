@@ -25,9 +25,15 @@ import { SITE_TITLE } from '../consts';
 			</section>
 		</main>
 		<script is:inline>
+			const getIdentityMode = () => {
+				const hash = window.location.hash || sessionStorage.getItem('netlifyIdentityHash') || '';
+				if (/recovery_token=/.test(hash)) return 'recovery';
+				return 'signup';
+			};
+
 			const openIdentity = () => {
 				if (!window.netlifyIdentity) return;
-				window.netlifyIdentity.open();
+				window.netlifyIdentity.open(getIdentityMode());
 			};
 
 			window.addEventListener('load', () => {
