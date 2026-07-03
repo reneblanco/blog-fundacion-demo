@@ -63,8 +63,8 @@ const { title, description, image = FallbackImage } = Astro.props;
 		if (!window.netlifyIdentity) return;
 		const identityHashPattern = /(?:invite|confirmation|recovery|email_change)_token=/;
 
-		if (identityHashPattern.test(window.location.hash) && window.location.pathname !== '/admin/') {
-			window.location.replace(`/admin/${window.location.hash}`);
+		if (identityHashPattern.test(window.location.hash) && window.location.pathname !== '/invite/') {
+			window.location.replace(`/invite/${window.location.hash}`);
 			return;
 		}
 
