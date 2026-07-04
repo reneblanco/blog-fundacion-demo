@@ -1,30 +1,71 @@
 ---
+import BaseHead from '../components/BaseHead.astro';
+import { sanityStudioUrl } from '../lib/sanity';
+import { SITE_TITLE } from '../consts';
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<BaseHead
+			title={`Admin | ${SITE_TITLE}`}
+			description="Panel editorial de Memoblog."
+		/>
 		<meta name="robots" content="noindex" />
-		<link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
-		<title>Administrador del blog</title>
+		<meta http-equiv="refresh" content={`0; url=${sanityStudioUrl}`} />
 	</head>
 	<body>
-		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-		<script is:inline>
-			if (window.netlifyIdentity) {
-				window.netlifyIdentity.on('init', (user) => {
-					if (!user && /invite_token=/.test(window.location.hash)) {
-						window.netlifyIdentity.open('signup');
-					}
-				});
-				window.netlifyIdentity.on('login', () => {
-					window.netlifyIdentity.close();
-				});
-				window.netlifyIdentity.init();
-			}
-		</script>
-		<script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+		<main>
+			<section>
+				<p class="eyebrow">Panel editorial</p>
+				<h1>Abriendo Sanity Studio</h1>
+				<p>Si no se abre automaticamente, usa este enlace.</p>
+				<a href={sanityStudioUrl}>Ir al Studio</a>
+			</section>
+		</main>
 	</body>
 </html>
+
+<style>
+	body {
+		display: grid;
+		min-height: 100vh;
+		place-items: center;
+	}
+	main {
+		width: min(560px, calc(100% - 32px));
+		padding: 48px 0;
+	}
+	section {
+		padding: 38px;
+		border: 1px solid #eceff1;
+		border-radius: 8px;
+		background: #fff;
+		text-align: center;
+		box-shadow: 0 16px 40px rgba(16, 35, 31, 8%);
+	}
+	.eyebrow {
+		margin: 0 0 12px;
+		color: var(--warm);
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+	p {
+		color: var(--muted);
+	}
+	a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 38px;
+		margin-top: 10px;
+		padding: 0 16px;
+		border-radius: 7px;
+		background: #111;
+		color: #fff;
+		font-size: 0.82rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+</style>

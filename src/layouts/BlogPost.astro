@@ -9,7 +9,7 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroImageUrl } = Astro.props;
 ---
 
 <html lang="es">
@@ -22,7 +22,13 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<main>
 			<article>
 				<div class="hero-image">
-					<Image width={1120} height={620} src={heroImage ?? FallbackImage} alt="" />
+					{
+						heroImageUrl ? (
+							<img src={heroImageUrl} alt="" loading="eager" />
+						) : (
+							<Image width={1120} height={620} src={heroImage ?? FallbackImage} alt="" />
+						)
+					}
 				</div>
 				<div class="prose">
 					<div class="title">

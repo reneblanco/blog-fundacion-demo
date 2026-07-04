@@ -7,10 +7,28 @@ import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getSanityPosts } from '../../lib/sanity';
 
-const posts = (await getCollection('blog')).sort(
+const sanityPosts = await getSanityPosts();
+const localPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+const posts =
+	sanityPosts.length > 0
+		? sanityPosts.map((post) => ({
+				slug: post.slug,
+				title: post.title,
+				description: post.description,
+				pubDate: new Date(post.publishedAt),
+				heroImageUrl: post.heroImageUrl,
+			}))
+		: localPosts.map((post) => ({
+				slug: post.id,
+				title: post.data.title,
+				description: post.data.description,
+				pubDate: post.data.pubDate,
+				heroImage: post.data.heroImage,
+			}));
 ---
 
 <!doctype html>
@@ -34,19 +52,20 @@ const posts = (await getCollection('blog')).sort(
 					{
 						posts.map((post) => (
 							<li>
-								<a href={`/blog/${post.id}/`}>
-									<Image
-										width={720}
-										height={450}
-										src={post.data.heroImage ?? FallbackImage}
-										alt=""
-									/>
+								<a href={`/blog/${post.slug}/`}>
+									{
+										post.heroImageUrl ? (
+											<img src={post.heroImageUrl} alt="" loading="lazy" />
+										) : (
+											<Image width={720} height={450} src={post.heroImage ?? FallbackImage} alt="" />
+										)
+									}
 									<div class="card-copy">
 										<p class="date">
-											<FormattedDate date={post.data.pubDate} />
+											<FormattedDate date={post.pubDate} />
 										</p>
-										<h2 class="title">{post.data.title}</h2>
-										<p class="description">{post.data.description}</p>
+										<h2 class="title">{post.title}</h2>
+										<p class="description">{post.description}</p>
 									</div>
 								</a>
 							</li>

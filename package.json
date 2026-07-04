@@ -12,7 +12,10 @@
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
+    "@sanity/vision": "^6.3.0",
     "astro": "^5.16.5",
-    "sharp": "^0.34.3"
+    "sanity": "^6.3.0",
+    "sharp": "^0.34.3",
+    "styled-components": "^6.4.3"
   }
 }

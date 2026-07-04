@@ -1,20 +1,59 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { getSanityPosts, renderPortableText, type SanityPost } from '../../lib/sanity';
+
+type Props =
+	| {
+			source: 'sanity';
+			post: SanityPost;
+	  }
+	| {
+			source: 'local';
+			post: CollectionEntry<'blog'>;
+	  };
 
 export async function getStaticPaths() {
+	const sanityPosts = await getSanityPosts();
+
+	if (sanityPosts.length > 0) {
+		return sanityPosts.map((post) => ({
+			params: { slug: post.slug },
+			props: { source: 'sanity', post },
+		}));
+	}
+
 	const posts = await getCollection('blog');
 	return posts.map((post) => ({
 		params: { slug: post.id },
-		props: post,
+		props: { source: 'local', post },
 	}));
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
-const { Content } = await render(post);
+const { source, post } = Astro.props as Props;
+
+let Content;
+let bodyHtml = '';
+
+if (source === 'local') {
+	const rendered = await render(post);
+	Content = rendered.Content;
+} else {
+	bodyHtml = renderPortableText(post.body);
+}
+
+const data =
+	source === 'sanity'
+		? {
+				title: post.title,
+				description: post.description,
+				pubDate: new Date(post.publishedAt),
+				updatedDate: post.updatedAt ? new Date(post.updatedAt) : undefined,
+				heroImageUrl: post.heroImageUrl,
+			}
+		: post.data;
 ---
 
-<BlogPost {...post.data}>
-	<Content />
+<BlogPost {...data}>
+	{source === 'sanity' ? <Fragment set:html={bodyHtml} /> : Content && <Content />}
 </BlogPost>
