@@ -6,18 +6,17 @@ import HeaderLink from './HeaderLink.astro';
 <header>
 	<nav>
 		<a class="brand" href="/" aria-label="Ir al inicio">
-			<span class="brand-mark"></span>
+			<span class="brand-mark">CC</span>
 			<span>
 				<strong>{SITE_TITLE}</strong>
-				<small>Blog editorial</small>
+				<small>Archivo de impacto</small>
 			</span>
 		</a>
 		<div class="internal-links">
 			<HeaderLink href="/">Inicio</HeaderLink>
 			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">Proyecto</HeaderLink>
-			<a class="icon-link" href="/blog/" aria-label="Buscar">Q</a>
-			<a class="subscribe-link" href="/admin/">Admin</a>
+			<HeaderLink href="/about">Fundación</HeaderLink>
+			<a class="subscribe-link" href="/blog/">Historias</a>
 		</div>
 	</nav>
 </header>
@@ -51,12 +50,16 @@ import HeaderLink from './HeaderLink.astro';
 		line-height: 1;
 	}
 	.brand-mark {
-		width: 30px;
-		height: 30px;
-		border-radius: 50%;
-		background:
-			linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 42%),
-			linear-gradient(135deg, #2f6f73, #c85f4a);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 34px;
+		height: 34px;
+		border-radius: 8px;
+		background: #17211d;
+		color: #fff;
+		font-size: 0.72rem;
+		font-weight: 800;
 	}
 	nav {
 		display: flex;
@@ -97,6 +100,9 @@ import HeaderLink from './HeaderLink.astro';
 		font-weight: 700;
 	}
 	.subscribe-link {
+		background: #fff8df;
+		border-color: #f4d984;
+		color: #5b4211;
 		font-weight: 700;
 	}
 	@media (max-width: 720px) {

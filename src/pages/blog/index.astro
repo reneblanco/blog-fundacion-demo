@@ -41,11 +41,19 @@ const posts =
 		<main>
 			<section class="blog-hero">
 				<p class="eyebrow">Archivo editorial</p>
-				<h1>Blog</h1>
+				<h1>Historias, programas y reportes de impacto.</h1>
 				<p>
-					Consulta noticias, testimonios y recursos publicados por el equipo. Las entradas nuevas
-					creadas desde el panel apareceran aqui automaticamente.
+					Consulta convocatorias, testimonios, avances de campo y recursos publicados por Casas
+					Carpin Fundación.
 				</p>
+			</section>
+			<section class="filters" aria-label="Categorias sugeridas">
+				<a href="/blog/">Todas</a>
+				<a href="/blog/">Becas</a>
+				<a href="/blog/">Agua</a>
+				<a href="/blog/">Reforestacion</a>
+				<a href="/blog/">Vivienda</a>
+				<a href="/blog/">Transparencia</a>
 			</section>
 			<section>
 				<ul>
@@ -79,11 +87,15 @@ const posts =
 </html>
 
 <style>
+	main {
+		width: min(1120px, calc(100% - 32px));
+		padding-top: 56px;
+	}
 	.blog-hero {
 		display: grid;
 		gap: 12px;
-		max-width: 780px;
-		margin-bottom: 42px;
+		max-width: 860px;
+		margin-bottom: 24px;
 	}
 	.blog-hero p {
 		margin: 0;
@@ -93,8 +105,29 @@ const posts =
 	.eyebrow {
 		color: var(--warm);
 		font-size: 0.78rem;
-		font-weight: 700;
+		font-weight: 800;
 		text-transform: uppercase;
+	}
+	.blog-hero h1 {
+		max-width: 760px;
+		font-size: clamp(2.4rem, 5vw, 4.5rem);
+		line-height: 1;
+	}
+	.filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 36px;
+	}
+	.filters a {
+		padding: 8px 12px;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		background: #fff;
+		color: var(--ink);
+		font-size: 0.84rem;
+		font-weight: 700;
+		text-decoration: none;
 	}
 	ul {
 		display: grid;
@@ -132,7 +165,7 @@ const posts =
 		border-radius: 0;
 	}
 	.card-copy {
-		padding: 20px;
+		padding: 22px;
 	}
 	.title {
 		margin: 0;

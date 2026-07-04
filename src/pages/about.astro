@@ -3,38 +3,59 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const pillars = [
+	['Escuchar', 'Partir de las necesidades de cada comunidad antes de proponer soluciones.'],
+	['Acompañar', 'Convertir programas de vivienda, becas y territorio en procesos sostenidos.'],
+	['Rendir cuentas', 'Publicar avances, aprendizajes y resultados de forma clara y accesible.'],
+];
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
-		<BaseHead title={`Proyecto | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<BaseHead title={`Fundación | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<section class="about">
-				<p class="eyebrow">Proyecto demo</p>
-				<h1>Un blog facil de administrar, listo para crecer con la organizacion.</h1>
-				<p>
-					Este sitio combina un frontend ligero en Astro con un panel editorial en /admin. El
-					equipo puede publicar entradas sin tocar codigo y Netlify se encarga de reconstruir el
-					sitio automaticamente.
-				</p>
-				<div class="features">
-					<div>
-						<strong>Publicacion simple</strong>
-						<span>Campos claros para titulo, fecha, imagen y contenido.</span>
-					</div>
-					<div>
-						<strong>Bajo mantenimiento</strong>
-						<span>Sin base de datos tradicional ni servidor que administrar.</span>
-					</div>
-					<div>
-						<strong>Rapido y seguro</strong>
-						<span>Contenido estatico servido desde Netlify.</span>
-					</div>
+			<section class="about-hero">
+				<div>
+					<p class="eyebrow">Sobre la fundación</p>
+					<h1>Un espacio para presentar propósito, programas y resultados.</h1>
 				</div>
+				<p>
+					Esta página está preparada como base editorial mientras se define la información final
+					de Casas Carpin Fundación. Puede explicar misión, ejes de trabajo, aliados, reportes y
+					formas de participar.
+				</p>
+			</section>
+
+			<section class="image-band">
+				<img
+					src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=82"
+					alt="Equipo trabajando en una mesa"
+				/>
+			</section>
+
+			<section class="pillars">
+				{
+					pillars.map(([title, description]) => (
+						<article>
+							<strong>{title}</strong>
+							<p>{description}</p>
+						</article>
+					))
+				}
+			</section>
+
+			<section class="note">
+				<p class="eyebrow">Nota para presentar</p>
+				<h2>La estructura ya soporta blog, categorías, contenido multimedia y llamadas a participar.</h2>
+				<p>
+					Lo siguiente sería reemplazar estos textos por misión real, programas confirmados,
+					fotografías propias y datos de impacto de la fundación.
+				</p>
 			</section>
 		</main>
 		<Footer />
@@ -42,44 +63,85 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 </html>
 
 <style>
-	.about {
-		max-width: 820px;
+	main {
+		width: min(1120px, calc(100% - 32px));
+	}
+	.about-hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(320px, 0.7fr);
+		gap: 48px;
+		align-items: end;
+		padding: 60px 0 44px;
 	}
 	.eyebrow {
 		margin: 0 0 12px;
 		color: var(--warm);
 		font-size: 0.78rem;
-		font-weight: 700;
+		font-weight: 800;
 		text-transform: uppercase;
 	}
-	.about > p:not(.eyebrow) {
-		color: var(--muted);
-		font-size: 1.1rem;
+	h1 {
+		max-width: 820px;
+		font-size: clamp(2.3rem, 5vw, 4.8rem);
+		line-height: 1;
 	}
-	.features {
+	.about-hero p:not(.eyebrow),
+	.note p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 1.02rem;
+	}
+	.image-band img {
+		display: block;
+		width: 100%;
+		max-height: 520px;
+		object-fit: cover;
+		border-radius: 8px;
+	}
+	.pillars {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 14px;
-		margin-top: 36px;
+		padding: 28px 0 72px;
 	}
-	.features div {
-		padding: 20px;
+	.pillars article {
+		padding: 22px;
 		border: 1px solid var(--line);
 		border-radius: 8px;
-		background: var(--surface);
+		background: #fff;
 	}
-	.features strong,
-	.features span {
-		display: block;
+	.pillars strong {
+		font-size: 1.1rem;
 	}
-	.features span {
-		margin-top: 8px;
+	.pillars p {
+		margin: 10px 0 0;
 		color: var(--muted);
-		font-size: 0.95rem;
+		font-size: 0.94rem;
 	}
-	@media (max-width: 760px) {
-		.features {
+	.note {
+		padding: 48px;
+		border: 1px solid var(--line);
+		border-radius: 8px;
+		background: #eef6f1;
+	}
+	.note h2 {
+		max-width: 760px;
+		font-size: clamp(1.8rem, 4vw, 3rem);
+		line-height: 1.05;
+	}
+	.note p {
+		max-width: 620px;
+	}
+	@media (max-width: 780px) {
+		main {
+			width: min(100% - 24px, 1120px);
+		}
+		.about-hero,
+		.pillars {
 			grid-template-columns: 1fr;
+		}
+		.note {
+			padding: 28px 20px;
 		}
 	}
 </style>

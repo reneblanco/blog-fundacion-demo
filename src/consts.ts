@@ -1,3 +1,3 @@
-export const SITE_TITLE = 'Memoblog';
+export const SITE_TITLE = 'Casas Carpin Fundación';
 export const SITE_DESCRIPTION =
-	'Un espacio editorial para compartir historias, proyectos e ideas de impacto social.';
+	'Historias, programas y aprendizajes de una fundación enfocada en comunidad, vivienda y futuro compartido.';

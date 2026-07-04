@@ -4,10 +4,15 @@ const today = new Date();
 
 <footer>
 	<div>
-		<strong>Memoblog</strong>
-		<p>Historias, avances y aprendizajes para una comunidad mejor informada.</p>
+		<strong>Casas Carpin Fundación</strong>
+		<p>Historias, avances y aprendizajes para cuidar comunidad, vivienda y territorio.</p>
 	</div>
-	<p class="copyright">&copy; {today.getFullYear()} Memoblog. Todos los derechos reservados.</p>
+	<nav aria-label="Enlaces secundarios">
+		<a href="/blog/">Blog</a>
+		<a href="/about/">Fundación</a>
+		<a href="/rss.xml">RSS</a>
+	</nav>
+	<p class="copyright">&copy; {today.getFullYear()} Casas Carpin Fundación.</p>
 </footer>
 <style>
 	footer {
@@ -20,6 +25,19 @@ const today = new Date();
 		padding: 42px 0 56px;
 		border-top: 1px solid var(--line);
 		color: var(--muted);
+	}
+	nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+	a {
+		color: var(--muted);
+		font-size: 0.9rem;
+		text-decoration: none;
+	}
+	a:hover {
+		color: var(--accent-dark);
 	}
 	strong {
 		color: var(--ink);

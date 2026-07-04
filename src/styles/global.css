@@ -1,17 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
 :root {
-	--ink: #10231f;
-	--muted: #5d706b;
-	--line: #d9e3df;
+	--ink: #17211d;
+	--muted: #60706a;
+	--line: #dde7e1;
 	--surface: #ffffff;
-	--surface-soft: #f5f8f6;
-	--accent: #2f6f73;
-	--accent-dark: #17494d;
-	--warm: #c85f4a;
+	--surface-soft: #f6f8f3;
+	--accent: #2f7964;
+	--accent-dark: #145343;
+	--warm: #d46f45;
+	--sun: #f2bd3c;
+	--sky: #4f7f9f;
 	--black: 16, 35, 31;
 	--gray: 93, 112, 107;
 	--gray-light: 217, 227, 223;
 	--gray-dark: 16, 35, 31;
-	--box-shadow: 0 16px 40px rgba(16, 35, 31, 12%);
+	--box-shadow: 0 18px 50px rgba(23, 33, 29, 12%);
 }
 @font-face {
 	font-family: "Atkinson";
@@ -28,16 +32,16 @@
 	font-display: swap;
 }
 body {
-	font-family: "Atkinson", sans-serif;
+	font-family: "Inter", "Atkinson", system-ui, sans-serif;
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: #fff;
+	background: #fbfcf8;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: var(--ink);
-	font-size: 18px;
-	line-height: 1.65;
+	font-size: 17px;
+	line-height: 1.62;
 }
 main {
 	width: min(980px, calc(100% - 32px));
@@ -56,10 +60,10 @@ h6 {
 	letter-spacing: 0;
 }
 h1 {
-	font-size: 3.25rem;
+	font-size: 3rem;
 }
 h2 {
-	font-size: 2.25rem;
+	font-size: 2.1rem;
 }
 h3 {
 	font-size: 1.6rem;
